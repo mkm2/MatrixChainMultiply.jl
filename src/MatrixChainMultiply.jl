@@ -9,9 +9,22 @@ Matrix-style sizes. Return type looks like `(i,j)` where `i` and `j` are `Ints`.
 If other packages with matrix types (e.g., OpenCl or ArrayFire) inherit from
 AbstractArray, there shouldn't be issues with other packages using this one.
 """
-msize{T}(m::AbstractArray{T,2}) = size(m)
-msize{T}(v::AbstractArray{T,1}) = (size(v)[1], 1)
-msize{T<:Number}(s::T) = (1, 1)
+#struct msize{T}(m::AbstractArray{T,2}) where T
+#  size(m)
+#end
+
+
+function msize(m::AbstractArray{T,2}) where {T}
+  size(m)
+end
+function msize(v::AbstractArray{T,1}) where {T}
+  (size(v)[1],1)
+end
+function msize(s::Number)
+  return (1,1)
+end
+#msize{T}(v::AbstractArray{T,1}) = (size(v)[1], 1)
+#msize{T<:Number}(s::T) = (1, 1)
 
 
 
